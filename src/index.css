@@ -1,0 +1,150 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── Base ──────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background-color: #FDF8F5;
+  color: #5a2a38;
+  font-family: 'DM Sans', sans-serif;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ─── Scrollbar ─────────────────────────────────────────────────── */
+::-webkit-scrollbar              { width: 5px; }
+::-webkit-scrollbar-track        { background: #FDF8F5; }
+::-webkit-scrollbar-thumb        { background: #EBA8B8; border-radius: 99px; }
+::-webkit-scrollbar-thumb:hover  { background: #C4748A; }
+
+/* ─── Selection ─────────────────────────────────────────────────── */
+::selection { background: #F5D6DC; color: #8B3A52; }
+
+/* ─── Typography utilities ──────────────────────────────────────── */
+.font-display { font-family: 'Playfair Display', Georgia, serif; }
+.font-serif   { font-family: 'Cormorant Garamond', Georgia, serif; }
+.font-body    { font-family: 'DM Sans', sans-serif; }
+
+/* ─── Shimmer text ──────────────────────────────────────────────── */
+.text-shimmer {
+  background: linear-gradient(
+    120deg,
+    #C4748A 0%,
+    #8B3A52 25%,
+    #C9A96E 50%,
+    #8B3A52 75%,
+    #C4748A 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer 4s linear infinite;
+}
+
+/* ─── Polaroid frames ───────────────────────────────────────────── */
+.polaroid {
+  background: #ffffff;
+  padding: 10px 10px 36px;
+  box-shadow:
+    0 1px 2px rgba(139,58,82,0.06),
+    0 8px 32px rgba(139,58,82,0.16),
+    0 20px 60px rgba(139,58,82,0.08),
+    inset 0 0 0 1px rgba(255,255,255,0.9);
+  position: relative;
+}
+
+.polaroid::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.15) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+/* ─── Noise texture overlay ─────────────────────────────────────── */
+.noise::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ─── Glass card ────────────────────────────────────────────────── */
+.glass {
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(235, 168, 184, 0.25);
+}
+
+/* ─── Wax seal button ───────────────────────────────────────────── */
+.btn-seal {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, #C4748A 0%, #8B3A52 100%);
+  color: white;
+  border-radius: 9999px;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 4px 20px rgba(139,58,82,0.35), 0 1px 4px rgba(139,58,82,0.2);
+}
+.btn-seal:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(139,58,82,0.4), 0 2px 8px rgba(139,58,82,0.25);
+}
+.btn-seal:active { transform: translateY(0); }
+.btn-seal::after {
+  content: '';
+  position: absolute;
+  top: -50%; left: -60%;
+  width: 40%; height: 200%;
+  background: rgba(255,255,255,0.25);
+  transform: skewX(-20deg);
+  transition: left 0.5s ease;
+}
+.btn-seal:hover::after { left: 130%; }
+
+/* ─── Dashed envelope border ────────────────────────────────────── */
+.envelope-border {
+  border: 2px dashed rgba(196, 116, 138, 0.3);
+  border-radius: 20px;
+  position: relative;
+}
+.envelope-border::before {
+  content: '♡';
+  position: absolute;
+  top: -14px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #FDF8F5;
+  padding: 0 12px;
+  color: #EBA8B8;
+  font-size: 18px;
+}
+
+/* ─── Progress bar ──────────────────────────────────────────────── */
+#scroll-progress {
+  position: fixed;
+  top: 0; left: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #F5D6DC, #EBA8B8, #C9A96E);
+  z-index: 9999;
+  transform-origin: left;
+  border-radius: 0 2px 2px 0;
+}
+
+/* ─── Custom cursor heart trail (desktop only) ──────────────────── */
+@media (hover: hover) {
+  body { cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath d='M12 21.593c-5.63-5.539-11-10.297-11-14.402 0-3.791 3.068-5.191 5.281-5.191 1.312 0 4.151.501 5.719 4.457 1.59-3.968 4.464-4.447 5.726-4.447 2.54 0 5.274 1.621 5.274 5.181 0 4.069-5.136 8.625-11 14.402z' fill='%23EBA8B8'/%3E%3C/svg%3E") 12 12, pointer; }
+}
